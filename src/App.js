@@ -4,7 +4,7 @@ import './App.css';
 class App extends Component {
 
   state = {
-    accountName: 'dante_de_braso',
+    accountName: '',
     accountId: '',
     allBattles: '',
     avgDamage: '',
@@ -13,7 +13,7 @@ class App extends Component {
     nextAvgDmg: ''
   };
 
-  componentDidMount() {
+  changeNickName = () => {
     fetch('https://api.worldoftanks.ru/wot/account/list/?application_id=demo&search=' + this.state.accountName)
       .then(res => res.json())
       .then(
@@ -68,7 +68,9 @@ class App extends Component {
         средний урон: {this.state.avgDamage / this.state.allBattles}
 
         <br />
-
+        <input type="text" placeholder='Ник' onChange={this.handleChange} name='accountName' />
+        <button onClick={this.changeNickName}>ok</button>
+        <br />
         <input type="text" placeholder='количество боёв за сессию' onChange={this.handleChange} name='sessionBattles' />
         <br />
         <input type="text" placeholder='количество урона за сессию' onChange={this.handleChange} name='sessionDmg' />
