@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
+import sword from './img/sword.svg';
+import swords from './img/swords.svg';
+import tree from './img/tree.svg';
 
 class App extends Component {
 
@@ -10,7 +13,8 @@ class App extends Component {
     avgDamage: '',
     sessionBattles: '',
     sessionDmg: '',
-    nextAvgDmg: ''
+    nextAvgDmg: '',
+    treeCut: ''
   };
 
   changeNickName = () => {
@@ -26,29 +30,33 @@ class App extends Component {
             .then(res => res.json())
             .then(
               (result) => {
+                console.log('--->', result.data[this.state.accountId].statistics);
                 this.setState({
                   allBattles: result.data[this.state.accountId].statistics.all.battles,
-                  avgDamage: result.data[this.state.accountId].statistics.all.damage_dealt
+                  avgDamage: Math.round(result.data[this.state.accountId].statistics.all.damage_dealt / result.data[this.state.accountId].statistics.all.battles),
+                  treeCut: result.data[this.state.accountId].statistics.trees_cut
                 })
               }
             )
         }
       )
-  }
+  };
 
   calcDmg = () => {
+    const battles = Number(this.state.allBattles) + Number(this.state.sessionBattles);
+    console.log('--->', battles);
     this.setState({
-      nextAvgDmg: ((this.state.allBattles * this.state.avgDamage) + (this.state.sessionBattles * this.state.sessionDmg)) / (this.state.allBattles + this.state.sessionBattles)
+      nextAvgDmg: Math.round(((this.state.allBattles * this.state.avgDamage) + (this.state.sessionBattles * this.state.sessionDmg)) / (battles))
     })
-  }
+  };
 
   handleChange = (e) => {
-    const name = e.target.attributes.name.nodeValue
+    const name = e.target.attributes.name.nodeValue;
     const value = e.target.value;
     this.setState({
       [name]: value
     })
-  }
+  };
 
 
   render() {
@@ -57,30 +65,40 @@ class App extends Component {
 
       <div className="App">
 
-        Идентификатор аккаунта: {this.state.accountId}
+        <header className="header">
+          WoT<span className="yellow">Calc</span>
+        </header>
 
-        <br />
+        <div className="container">
 
-        Количество боёв: {this.state.allBattles}
+          <div className='searchInputTitle'>Введите ваш игровой ник</div>
 
-        <br />
+          <div className='searchInput'>
+            <input type="text" placeholder='Ник' onChange={this.handleChange} name='accountName'/>
+            <button onClick={this.changeNickName}>ok</button>
+          </div>
 
-        средний урон: {this.state.avgDamage / this.state.allBattles}
+          {this.state.accountId ?
+            <div>
+              <div className="accData">
+                <div className='nickname'>{this.state.accountName}</div>
+                <div className='avgDamage'><img src={sword} alt=""/>Средний урон: <span>{Math.round(this.state.avgDamage)}</span></div>
+                <div className='allBattles'><img src={swords} alt=""/>Количество боёв: <span>{this.state.allBattles}</span></div>
+                <div className='trees'><img src={tree} alt=""/>Количество поваленных деревьев: <span>{this.state.treeCut}</span></div>
+              </div>
+              <div className='inputWrapper'>
+                <input type="text" placeholder='количество боёв за сессию' onChange={this.handleChange} name='sessionBattles'/>
+                <input type="text" placeholder='средний урон за сессию' onChange={this.handleChange} name='sessionDmg'/>
+              </div>
+              <button className='button' onClick={this.calcDmg}>Рассчитать</button>
+            </div>
+            : ''}
 
-        <br />
-        <input type="text" placeholder='Ник' onChange={this.handleChange} name='accountName' />
-        <button onClick={this.changeNickName}>ok</button>
-        <br />
-        <input type="text" placeholder='количество боёв за сессию' onChange={this.handleChange} name='sessionBattles' />
-        <br />
-        <input type="text" placeholder='количество урона за сессию' onChange={this.handleChange} name='sessionDmg' />
-        <br />
+          {this.state.nextAvgDmg ? <div className='nextAvgDmg'>Через {this.state.sessionBattles} боёв средний урон на аккаунте будет равен <br/> <span>{this.state.nextAvgDmg}</span></div> : ''}
 
-        <button onClick={this.calcDmg}>Рассчитать</button>
+          <p className='subtext'>Вы можете использовать этот калькулятор для рассчёта урона на технике</p>
 
-        <br />
-
-        {this.state.nextAvgDmg}
+        </div>
 
       </div>
     );
