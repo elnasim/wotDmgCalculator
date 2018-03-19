@@ -30,7 +30,6 @@ class App extends Component {
             .then(res => res.json())
             .then(
               (result) => {
-                console.log('--->', result.data[this.state.accountId].statistics);
                 this.setState({
                   allBattles: result.data[this.state.accountId].statistics.all.battles,
                   avgDamage: Math.round(result.data[this.state.accountId].statistics.all.damage_dealt / result.data[this.state.accountId].statistics.all.battles),
@@ -60,22 +59,16 @@ class App extends Component {
   coloredDmg = (avgDamage) => {
     if (this.state[avgDamage] < 750) {
       return <span className='red'>{Math.round(this.state[avgDamage])}</span>
-    } else if (this.state.avgDamage >= 750) {
+    } else if (this.state[avgDamage] >= 750 && this.state[avgDamage] < 1000) {
       return <span className='yellow'>{Math.round(this.state[avgDamage])}</span>
-    } else if (this.state.avgDamage >= 1000) {
+    } else if (this.state[avgDamage] >= 1000 && this.state[avgDamage] < 1800) {
       return <span className='green'>{Math.round(this.state[avgDamage])}</span>
-    } else if (this.state.avgDamage >= 1800) {
+    } else if (this.state[avgDamage] >= 1800 && this.state[avgDamage] < 2500) {
       return <span className='blue'>{Math.round(this.state[avgDamage])}</span>
-    } else if (this.state.avgDamage >= 2500) {
+    } else if (this.state[avgDamage] >= 2500) {
       return <span className='purpure'>{Math.round(this.state[avgDamage])}</span>
     }
   };
-
-
-  componentWillReceiveProps(nextProps) {
-
-  }
-
 
   render() {
 
