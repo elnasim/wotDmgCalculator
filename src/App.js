@@ -44,7 +44,6 @@ class App extends Component {
 
   calcDmg = () => {
     const battles = Number(this.state.allBattles) + Number(this.state.sessionBattles);
-    console.log('--->', battles);
     this.setState({
       nextAvgDmg: Math.round(((this.state.allBattles * this.state.avgDamage) + (this.state.sessionBattles * this.state.sessionDmg)) / (battles))
     })
@@ -57,6 +56,25 @@ class App extends Component {
       [name]: value
     })
   };
+
+  coloredDmg = (avgDamage) => {
+    if (this.state[avgDamage] < 750) {
+      return <span className='red'>{Math.round(this.state[avgDamage])}</span>
+    } else if (this.state.avgDamage >= 750) {
+      return <span className='yellow'>{Math.round(this.state[avgDamage])}</span>
+    } else if (this.state.avgDamage >= 1000) {
+      return <span className='green'>{Math.round(this.state[avgDamage])}</span>
+    } else if (this.state.avgDamage >= 1800) {
+      return <span className='blue'>{Math.round(this.state[avgDamage])}</span>
+    } else if (this.state.avgDamage >= 2500) {
+      return <span className='purpure'>{Math.round(this.state[avgDamage])}</span>
+    }
+  };
+
+
+  componentWillReceiveProps(nextProps) {
+
+  }
 
 
   render() {
@@ -82,7 +100,7 @@ class App extends Component {
             <div>
               <div className="accData">
                 <div className='nickname'>{this.state.accountName}</div>
-                <div className='avgDamage'><img src={sword} alt=""/>Средний урон: <span>{Math.round(this.state.avgDamage)}</span></div>
+                <div className='avgDamage'><img src={sword} alt=""/>Средний урон: {this.coloredDmg('avgDamage')}</div>
                 <div className='allBattles'><img src={swords} alt=""/>Количество боёв: <span>{this.state.allBattles}</span></div>
                 <div className='trees'><img src={tree} alt=""/>Количество поваленных деревьев: <span>{this.state.treeCut}</span></div>
               </div>
@@ -94,9 +112,9 @@ class App extends Component {
             </div>
             : ''}
 
-          {this.state.nextAvgDmg ? <div className='nextAvgDmg'>Через {this.state.sessionBattles} боёв средний урон на аккаунте будет равен <br/> <span>{this.state.nextAvgDmg}</span></div> : ''}
+          {this.state.nextAvgDmg ? <div className='nextAvgDmg'>Через {this.state.sessionBattles} боёв средний урон на аккаунте будет равен <br/> {this.coloredDmg('nextAvgDmg')}</div> : ''}
 
-          <p className='subtext'>Вы можете использовать этот калькулятор для рассчёта урона на технике</p>
+          {/*<p className='subtext'>Вы можете использовать этот калькулятор для рассчёта урона на аккаунте или отдельно на технике</p>*/}
 
         </div>
 

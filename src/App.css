@@ -92,7 +92,6 @@ input {
 }
 
 .avgDamage span {
-  color: red;
   margin-left: 10px;
 }
 
@@ -110,7 +109,7 @@ input {
 }
 
 .allBattles span {
-  color: red;
+  color: #fff;
   margin-left: 10px;
 }
 
@@ -132,7 +131,7 @@ input {
   margin-right: 15px;
 }
 
-.trees span{
+.trees span {
   margin-left: 10px;
 }
 
@@ -150,7 +149,6 @@ input {
 }
 
 .nextAvgDmg span {
-  color: red;
   font-size: 38px;
   display: inline-block;
   margin-bottom: 30px;
@@ -166,4 +164,24 @@ input {
 
 .subtext {
   font-size: 18px;
+}
+
+.red {
+  color: red;
+}
+
+.yellow {
+  color: #ccc636;
+}
+
+.green {
+  color: #5ca61c;
+}
+
+.blue {
+  color: #3bc8e0;
+}
+
+.purpure {
+  color: #cc5eff;
 }
