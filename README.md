@@ -1,1 +1,1 @@
-https://elnasim.github.io/works/wotcalc
+https://elnasim.github.io/works/wotCalc
