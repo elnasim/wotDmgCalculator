@@ -93,9 +93,9 @@ class App extends Component {
             <div>
               <div className="accData">
                 <div className='nickname'>{this.state.accountName}</div>
-                <div className='avgDamage'><img src={sword} alt=""/>Средний урон: {this.coloredDmg('avgDamage')}</div>
-                <div className='allBattles'><img src={swords} alt=""/>Количество боёв: <span>{this.state.allBattles}</span></div>
-                <div className='trees'><img src={tree} alt=""/>Количество поваленных деревьев: <span>{this.state.treeCut}</span></div>
+                <div className='avgDamage'><img src={sword.slice(1)} alt=""/>Средний урон: {this.coloredDmg('avgDamage')}</div>
+                <div className='allBattles'><img src={swords.slice(1)} alt=""/>Количество боёв: <span>{this.state.allBattles}</span></div>
+                <div className='trees'><img src={tree.slice(1)} alt=""/>Количество поваленных деревьев: <span>{this.state.treeCut}</span></div>
               </div>
               <div className='inputWrapper'>
                 <input type="text" placeholder='количество боёв за сессию' onChange={this.handleChange} name='sessionBattles'/>
